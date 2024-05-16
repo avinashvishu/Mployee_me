@@ -2,6 +2,7 @@ import './App.css'
 import HeroContainer from './component/HeroContainer'
 import Nav from './component/Nav'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SideNav from './component/SideNav';
 
 function App() {
 
@@ -13,8 +14,8 @@ function App() {
 
       {/* body */}
       <div className='flex'>
-        {/* side nav */}
-      <div className='w-[15vw] border-r  border-slate-200'></div>
+      {/* side nav */}
+      <SideNav/> 
       {/* main */}
       <div className='px-3 pt-3 bg-slate-50 w-[85vw] h-[93vh] '>
          <HeroContainer/> 
