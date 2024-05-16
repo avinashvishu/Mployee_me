@@ -3,9 +3,21 @@ import { MdWorkOutline } from "react-icons/md";
 import { TbClockHour8 } from "react-icons/tb";
 import { CiBookmarkMinus } from "react-icons/ci";
 import Guage from "./Guage";
+import { useState } from "react";
+import { Pagination } from "react-bootstrap";
+
 
 const HeroContainer = () => {
+  
+    const [currentPage,setCurrentPage] = useState(1);
+    const limit = 20;
+    const lastIndex = currentPage * limit;
+    const firstIndex = lastIndex - limit;
+    const records = Data.slice(firstIndex,lastIndex);
+    const nPage = Math.ceil(Data.length/limit);
+    const numbers = [...Array(nPage +1 ).keys()].slice(1);
  
+
     function convertDateFormat(dateStr) {
         // Split the date string into components
         let dateParts = dateStr.split("/");
@@ -30,13 +42,30 @@ const HeroContainer = () => {
         return formattedDate;
     }
 
+    const prev=()=>{
+        if(currentPage == 1){
+            return
+        }
+
+        setCurrentPage(currentPage - 1)
+    }
+
+    
+    const next=()=>{
+        if(currentPage == nPage){
+            return
+        }
+
+        setCurrentPage(currentPage + 1)
+    }
+
   return (
     <div className="w-full h-full flex flex-col bg-white border border-x-slate-300 rounded-t-lg" >
         {/* head */}
         <div className="h-20 flex  justify-start items-center p-4 font-medium">Jobs({Data.length})</div>
         {/* body */}
         <div className="flex-grow overflow-y-auto no-scrollbar p-2">
-            {Data.map((item,i)=>{
+            {records.map((item,i)=>{
                 return (
                 <div key={i} className="w-full h-fit bg-slate-50 my-2 border border-x-slate-300 rounded-lg flex overflow-hidden">
                     {/* left */} 
@@ -127,8 +156,21 @@ const HeroContainer = () => {
         </div>
         {/* bottom */}
         <div className="h-10  shadow-2xl p-4 border-t border-slate-200 flex justify-between items-center">
-            <div>Showing 1-20 from 1250 data</div>
-            <div>Pagination</div>
+            <div>Showing {firstIndex+1}-{lastIndex} from {Data.length} data</div>
+            {/* Pagination nav btm */}
+            <div>
+               <Pagination>
+                <Pagination.Prev onClick={prev}/>
+                 {numbers.map((item , i)=>{
+                    return( 
+                    <Pagination.Item key={i} active={item == currentPage} onClick={()=>setCurrentPage(item)} >
+                            {item}
+                        </Pagination.Item>
+                    )
+                 })}
+                <Pagination.Next onClick={next} />
+               </Pagination>
+            </div>
         </div>
 
     </div>

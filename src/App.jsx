@@ -1,6 +1,7 @@
 import './App.css'
 import HeroContainer from './component/HeroContainer'
 import Nav from './component/Nav'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
     <>
      {/* nav */}
       <Nav/>
+
       {/* body */}
       <div className='flex'>
         {/* side nav */}
